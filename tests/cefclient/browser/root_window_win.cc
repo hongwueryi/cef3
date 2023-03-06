@@ -166,6 +166,11 @@ void RootWindowWin::Init(RootWindow::Delegate* delegate,
 
   initialized_ = true;
 
+  ///HONG
+  /*char buffer[10] = { 0 };
+  itoa(GetCurrentProcessId(), buffer, 10);
+  MessageBoxA(NULL, config.url.c_str(), buffer, MB_OK);*/
+
   // Create the native root window on the main thread.
   if (CURRENTLY_ON_MAIN_THREAD()) {
     CreateRootWindow(settings, config.initially_hidden);

@@ -23,6 +23,7 @@
 #include "tests/shared/browser/extension_util.h"
 #include "tests/shared/browser/resource_util.h"
 #include "tests/shared/common/client_switches.h"
+#include "../hong_switch.h"
 
 namespace client {
 
@@ -318,9 +319,16 @@ void ClientHandler::OnBeforeContextMenu(CefRefPtr<CefBrowser> browser,
 
   if ((params->GetTypeFlags() & (CM_TYPEFLAG_PAGE | CM_TYPEFLAG_FRAME)) != 0) {
     // Add a separator if the menu already has items.
-    if (model->GetCount() > 0)
-      model->AddSeparator();
-
+      if (model->GetCount() > 0)
+      {
+#if HONG_TEST
+          model->Clear();
+#else 
+          model->AddSeparator();
+#endif    
+      }
+      
+#if HONG_TEST
     const bool use_chrome_runtime = MainContext::Get()->UseChromeRuntime();
     if (!use_chrome_runtime) {
       // TODO(chrome-runtime): Add support for this.
@@ -352,6 +360,7 @@ void ClientHandler::OnBeforeContextMenu(CefRefPtr<CefBrowser> browser,
 
     // Test context menu features.
     BuildTestMenu(model);
+#endif
   }
 
   if (delegate_)

@@ -3,3 +3,4 @@ libcef.dll
 cef_sandbox.lib
 Debug/
 Release/
+*.log

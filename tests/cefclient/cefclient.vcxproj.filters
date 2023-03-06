@@ -411,6 +411,7 @@
     <ClInclude Include="E:\Dten\other demo\CEF3\cef3\tests\shared\browser\util_win.h">
       <Filter>shared\browser</Filter>
     </ClInclude>
+    <ClInclude Include="hong_switch.h" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="E:\Dten\other demo\CEF3\cef3\tests\cefclient\CMakeLists.txt" />

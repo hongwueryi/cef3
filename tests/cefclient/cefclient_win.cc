@@ -17,6 +17,7 @@
 #include "tests/shared/common/client_app_other.h"
 #include "tests/shared/common/client_switches.h"
 #include "tests/shared/renderer/client_app_renderer.h"
+#include "hong_switch.h"
 
 // When generating projects with CMake the CEF_USE_SANDBOX value will be defined
 // automatically if using the required compiler version. Pass -DUSE_SANDBOX=OFF
@@ -83,6 +84,7 @@ int RunMain(HINSTANCE hInstance, int nCmdShow) {
   // Populate the settings based on command line arguments.
   context->PopulateSettings(&settings);
 
+  
   // Create the main message loop object.
   scoped_ptr<MainMessageLoop> message_loop;
   if (settings.multi_threaded_message_loop)
@@ -92,6 +94,9 @@ int RunMain(HINSTANCE hInstance, int nCmdShow) {
   else
     message_loop.reset(new MainMessageLoopStd);
 
+#if HONG_TEST
+  settings.log_severity = LOGSEVERITY_DISABLE;
+#endif
   // Initialize CEF.
   context->Initialize(main_args, settings, app, sandbox_info);
 
@@ -100,10 +105,18 @@ int RunMain(HINSTANCE hInstance, int nCmdShow) {
 
   RootWindowConfig window_config;
   window_config.always_on_top = command_line->HasSwitch(switches::kAlwaysOnTop);
+#if HONG_TEST
+  window_config.with_controls =
+      command_line->HasSwitch(switches::kHideControls);
+#else
   window_config.with_controls =
       !command_line->HasSwitch(switches::kHideControls);
+#endif
   window_config.with_osr = settings.windowless_rendering_enabled ? true : false;
 
+#if HONG_TEST
+  window_config.url = "www.baidu.com";
+#endif
   // Create the first window.
   context->GetRootWindowManager()->CreateRootWindow(window_config);
 
