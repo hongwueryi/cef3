@@ -26,6 +26,7 @@
 #elif defined(OS_MAC)
 #include "tests/cefclient/browser/window_test_runner_mac.h"
 #endif
+#include "../hong_switch.h"
 
 namespace client {
 namespace window_test {
@@ -69,9 +70,13 @@ class Handler : public CefMessageRouterBrowserSide::Handler {
                        bool persistent,
                        CefRefPtr<Callback> callback) OVERRIDE {
     // Only handle messages from the test URL.
-    const std::string& url = frame->GetURL();
-    if (!test_runner::IsTestURL(url, kTestUrlPath))
-      return false;
+#if HONG_TEST
+
+#else
+      const std::string& url = frame->GetURL();
+      if (!test_runner::IsTestURL(url, kTestUrlPath))
+          return false;
+#endif
 
     const std::string& message_name = request;
     if (message_name.find(kMessagePositionName) == 0) {

@@ -4,3 +4,4 @@ cef_sandbox.lib
 Debug/
 Release/
 *.log
+*.aps

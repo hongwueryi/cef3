@@ -765,7 +765,13 @@ bool RootWindowWin::OnCommand(UINT id) {
 
   switch (id) {
     case IDM_ABOUT:
-      OnAbout();
+    {
+        const std::string& code = "window.alerts('123')";
+        CefString strurl = this->GetBrowser()->GetMainFrame()->GetURL();
+        this->GetBrowser()->GetMainFrame()->ExecuteJavaScript(
+            code, this->GetBrowser()->GetMainFrame()->GetURL(), 0);
+    }     
+      //OnAbout();
       return true;
     case IDM_EXIT:
       delegate_->OnExit(this);

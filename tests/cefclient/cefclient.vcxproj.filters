@@ -412,6 +412,7 @@
       <Filter>shared\browser</Filter>
     </ClInclude>
     <ClInclude Include="hong_switch.h" />
+    <ClInclude Include="resources\win\resource.h" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="E:\Dten\other demo\CEF3\cef3\tests\cefclient\CMakeLists.txt" />
@@ -435,6 +436,8 @@
     <Image Include="E:\Dten\other demo\CEF3\cef3\tests\shared\resources\window_icon.2x.png">
       <Filter>shared\resources</Filter>
     </Image>
+    <Image Include="resources\win\cefclient.ico" />
+    <Image Include="resources\win\small.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="E:\Dten\other demo\CEF3\cef3\tests\cefclient\resources\binding.html">

@@ -539,6 +539,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="E:\Dten\other demo\CEF3\cef3\tests\shared\renderer\client_app_renderer.cc" />
     <ClInclude Include="E:\Dten\other demo\CEF3\cef3\tests\shared\renderer\client_app_renderer.h" />
     <ClInclude Include="hong_switch.h" />
+    <ClInclude Include="resources\win\resource.h" />
+    <Image Include="resources\win\cefclient.ico" />
+    <Image Include="resources\win\small.ico" />
     <None Include="E:\Dten\other demo\CEF3\cef3\tests\cefclient\resources\binding.html">
     </None>
     <None Include="E:\Dten\other demo\CEF3\cef3\tests\cefclient\resources\dialogs.html">

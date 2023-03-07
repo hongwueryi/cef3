@@ -31,6 +31,20 @@
 #pragma comment(lib, "cef_sandbox.lib")
 #endif
 
+std::string GetApplicationDir()
+{
+    HMODULE hModule = GetModuleHandleW(NULL);
+    WCHAR   wpath[MAX_PATH];
+
+    GetModuleFileNameW(hModule, wpath, MAX_PATH);
+    std::wstring wide(wpath);
+
+    std::string path = CefString(wide);
+    path = path.substr(0, path.find_last_of("\\/"));
+    return path;
+}
+
+
 namespace client {
 namespace {
 
@@ -115,7 +129,11 @@ int RunMain(HINSTANCE hInstance, int nCmdShow) {
   window_config.with_osr = settings.windowless_rendering_enabled ? true : false;
 
 #if HONG_TEST
-  window_config.url = "www.baidu.com";
+
+#else
+  ///window_config.url = "www.baidu.com";
+  std::string url = "file://" + GetApplicationDir() + "/html/index.html";
+  window_config.url = url;
 #endif
   // Create the first window.
   context->GetRootWindowManager()->CreateRootWindow(window_config);
