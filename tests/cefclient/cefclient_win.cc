@@ -129,11 +129,10 @@ int RunMain(HINSTANCE hInstance, int nCmdShow) {
   window_config.with_osr = settings.windowless_rendering_enabled ? true : false;
 
 #if HONG_TEST
-
-#else
-  ///window_config.url = "www.baidu.com";
   std::string url = "file://" + GetApplicationDir() + "/html/index.html";
   window_config.url = url;
+#else
+  window_config.url = "www.baidu.com";
 #endif
   // Create the first window.
   context->GetRootWindowManager()->CreateRootWindow(window_config);

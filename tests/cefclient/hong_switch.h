@@ -1,2 +1,2 @@
 #pragma once
-#define HONG_TEST 0
+#define HONG_TEST 1

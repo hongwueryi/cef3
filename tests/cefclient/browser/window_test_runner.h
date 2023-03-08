@@ -7,7 +7,7 @@
 #pragma once
 
 #include "include/cef_browser.h"
-
+#include "../hong_switch.h"
 namespace client {
 namespace window_test {
 
@@ -23,7 +23,9 @@ class WindowTestRunner {
   virtual void Minimize(CefRefPtr<CefBrowser> browser) = 0;
   virtual void Maximize(CefRefPtr<CefBrowser> browser) = 0;
   virtual void Restore(CefRefPtr<CefBrowser> browser) = 0;
-
+#if HONG_TEST
+  virtual void Close(CefRefPtr<CefBrowser> browser) = 0;
+#endif
   // Fit |window| inside |display|. Coordinates are relative to the upper-left
   // corner of the display.
   static void ModifyBounds(const CefRect& display, CefRect& window);

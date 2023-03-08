@@ -55,6 +55,11 @@ void WindowTestRunnerViews::Maximize(CefRefPtr<CefBrowser> browser) {
 void WindowTestRunnerViews::Restore(CefRefPtr<CefBrowser> browser) {
   GetWindow(browser)->Restore();
 }
+#if HONG_TEST
+void WindowTestRunnerViews::Close(CefRefPtr<CefBrowser> browser) {
+    GetWindow(browser)->Close();
+}
+#endif
 
 }  // namespace window_test
 }  // namespace client

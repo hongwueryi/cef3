@@ -91,6 +91,15 @@ void RestoreImpl(CefRefPtr<CefBrowser> browser) {
   ::ShowWindow(root_hwnd, SW_RESTORE);
 }
 
+#if HONG_TEST
+void Close1(CefRefPtr<CefBrowser> browser) {
+    HWND root_hwnd = GetRootHwnd(browser);
+    if (!root_hwnd)
+        return;
+    SendMessage(root_hwnd, WM_CLOSE, 0, 0);
+}
+#endif
+
 }  // namespace
 
 WindowTestRunnerWin::WindowTestRunnerWin() {}
@@ -134,6 +143,18 @@ void WindowTestRunnerWin::Restore(CefRefPtr<CefBrowser> browser) {
     MAIN_POST_CLOSURE(base::Bind(RestoreImpl, browser));
   }
 }
+
+#if HONG_TEST
+void WindowTestRunnerWin::Close(CefRefPtr<CefBrowser> browser) {
+    if (CURRENTLY_ON_MAIN_THREAD()) {
+        Close1(browser);
+    }
+    else {
+        // Execute on the main application thread.
+        MAIN_POST_CLOSURE(base::Bind(RestoreImpl, browser));
+    }
+}
+#endif
 
 }  // namespace window_test
 }  // namespace client

@@ -7,7 +7,7 @@
 #pragma once
 
 #include "tests/cefclient/browser/window_test_runner.h"
-
+#include "../hong_switch.h"
 namespace client {
 namespace window_test {
 
@@ -24,6 +24,9 @@ class WindowTestRunnerViews : public WindowTestRunner {
   void Minimize(CefRefPtr<CefBrowser> browser) OVERRIDE;
   void Maximize(CefRefPtr<CefBrowser> browser) OVERRIDE;
   void Restore(CefRefPtr<CefBrowser> browser) OVERRIDE;
+#if HONG_TEST
+  void Close(CefRefPtr<CefBrowser> browser) OVERRIDE;
+#endif
 };
 
 }  // namespace window_test

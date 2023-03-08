@@ -25,6 +25,9 @@ class WindowTestRunnerWin : public WindowTestRunner {
   void Minimize(CefRefPtr<CefBrowser> browser) OVERRIDE;
   void Maximize(CefRefPtr<CefBrowser> browser) OVERRIDE;
   void Restore(CefRefPtr<CefBrowser> browser) OVERRIDE;
+#if HONG_TEST
+  void Close(CefRefPtr<CefBrowser> browser) OVERRIDE;
+#endif
 };
 
 }  // namespace window_test

@@ -38,6 +38,10 @@ const char kMessagePositionName[] = "WindowTest.Position";
 const char kMessageMinimizeName[] = "WindowTest.Minimize";
 const char kMessageMaximizeName[] = "WindowTest.Maximize";
 const char kMessageRestoreName[] = "WindowTest.Restore";
+#if HONG_TEST
+const char kMessagejscallnative[] = "WindowTest.jscallnative";
+const char kMessageClose[] = "WindowTest.Close";
+#endif
 
 // Create the appropriate platform test runner object.
 scoped_ptr<WindowTestRunner> CreateWindowTestRunner() {
@@ -105,7 +109,15 @@ class Handler : public CefMessageRouterBrowserSide::Handler {
     } else if (message_name == kMessageRestoreName) {
       // Execute Restore() on the main thread.
       runner_->Restore(browser);
-    } else {
+#if HONG_TEST
+    }
+    else if (message_name == kMessagejscallnative) {
+        MessageBoxA(NULL, message_name.c_str(), "msg", MB_OK);
+    }
+    else if (message_name == kMessageClose) {
+        runner_->Close(browser);
+#endif
+    }else {
       NOTREACHED();
     }
 

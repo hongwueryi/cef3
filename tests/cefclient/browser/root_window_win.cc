@@ -327,7 +327,10 @@ void RootWindowWin::CreateRootWindow(const CefBrowserSettings& settings,
   HINSTANCE hInstance = GetModuleHandle(NULL);
 
   // Load strings from the resource file.
+#if HONG_TEST
+#else
   const std::wstring& window_title = GetResourceString(IDS_APP_TITLE);
+#endif
   const std::wstring& window_class = GetResourceString(IDC_CEFCLIENT);
 
   const cef_color_t background_color = MainContext::Get()->GetBackgroundColor();
@@ -345,14 +348,17 @@ void RootWindowWin::CreateRootWindow(const CefBrowserSettings& settings,
   CefRefPtr<CefCommandLine> command_line =
       CefCommandLine::GetGlobalCommandLine();
   const bool no_activate = command_line->HasSwitch(switches::kNoActivate);
-
+#if HONG_TEST
+  DWORD dwStyle = WS_EX_TOOLWINDOW;
+#else
   const DWORD dwStyle = WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN;
+#endif
   DWORD dwExStyle = always_on_top_ ? WS_EX_TOPMOST : 0;
   if (no_activate) {
     // Don't activate the browser window on creation.
     dwExStyle |= WS_EX_NOACTIVATE;
   }
-
+  
   int x, y, width, height;
   if (::IsRectEmpty(&start_rect_)) {
     // Use the default window position/size.
@@ -369,10 +375,16 @@ void RootWindowWin::CreateRootWindow(const CefBrowserSettings& settings,
   }
 
   browser_settings_ = settings;
-
+  /*LONG lStyle = ::GetWindowLong(hwnd_, GWL_STYLE);
+  ::SetWindowLong(hwnd_, GWL_STYLE, lStyle & ~WS_CAPTION);*/
   // Create the main window initially hidden.
-  CreateWindowEx(dwExStyle, window_class.c_str(), window_title.c_str(), dwStyle,
+#if HONG_TEST
+  CreateWindowEx(dwExStyle, window_class.c_str(), NULL, dwStyle,
                  x, y, width, height, NULL, NULL, hInstance, this);
+#else
+  CreateWindowEx(dwExStyle, window_class.c_str(), window_title.c_str(), dwStyle,
+      x, y, width, height, NULL, NULL, hInstance, this);
+#endif
   CHECK(hwnd_);
 
   if (!called_enable_non_client_dpi_scaling_ && IsProcessPerMonitorDpiAware()) {
@@ -766,7 +778,7 @@ bool RootWindowWin::OnCommand(UINT id) {
   switch (id) {
     case IDM_ABOUT:
     {
-        const std::string& code = "window.alerts('123')";
+        const std::string& code = "window.alerts('native call js.')";
         CefString strurl = this->GetBrowser()->GetMainFrame()->GetURL();
         this->GetBrowser()->GetMainFrame()->ExecuteJavaScript(
             code, this->GetBrowser()->GetMainFrame()->GetURL(), 0);
